@@ -1,0 +1,51 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img {
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.card-title {
+  margin-bottom: 8px;
+}
+
+.card-description {
+  margin-bottom: 16px;
+}
+
+.card-rating {
+  margin-top: auto;
+}
+
+.filter-bar {
+  margin-bottom: 16px;
+}
+
+.filter-history {
+  margin-bottom: 16px;
+}
+
+.filter-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
