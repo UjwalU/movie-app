@@ -3,17 +3,36 @@ import PropTypes from 'prop-types';
 
 const FilterHistory = ({ history, deleteFilter, clearHistory }) => {
   return (
-    <div className="filter-history mb-4">
-      <h3 className="text-lg font-semibold mb-2">Filter History</h3>
-      <ul className="space-y-2">
-        {history.map((filter, index) => (
-          <li key={index} className="filter-item flex justify-between items-center p-2 border rounded">
-            {filter.title} - {filter.language}
-            <button onClick={() => deleteFilter(index)} className="btn bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={clearHistory} className="btn bg-red-500 text-white px-4 py-2 rounded mt-2">Delete Filter History</button>
+    <div className="mb-4">
+      <h2 className="text-xl font-bold mb-2">Search History</h2>
+      {history.length === 0 ? (
+        <p>No search history.</p>
+      ) : (
+        <ul>
+          {history.map((filter, index) => (
+            <li key={index} className="mb-2 flex justify-between items-center">
+              <div>
+                <strong>Title:</strong> {filter.title || 'Any'} <br />
+                <strong>Languages:</strong> {filter.language && filter.language.length > 0 ? filter.language.join(', ') : 'Any'}
+              </div>
+              <button
+                onClick={() => deleteFilter(index)}
+                className="px-2 py-1 bg-red-500 text-white rounded"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {history.length > 0 && (
+        <button
+          onClick={clearHistory}
+          className="px-4 py-2 bg-gray-500 text-white rounded mt-2"
+        >
+          Clear History
+        </button>
+      )}
     </div>
   );
 };
@@ -22,7 +41,7 @@ FilterHistory.propTypes = {
   history: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
-      language: PropTypes.string,
+      language: PropTypes.arrayOf(PropTypes.string),
     })
   ).isRequired,
   deleteFilter: PropTypes.func.isRequired,
