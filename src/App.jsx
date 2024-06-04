@@ -16,6 +16,17 @@ const App = () => {
   const [filterHistory, setFilterHistory] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSpinner(false);
+    }, 1500);
+
+    fetchMovies();
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     fetchMovies();
@@ -50,6 +61,7 @@ const App = () => {
     } catch (error) {
       console.error('Error fetching movies:', error);
       setLoading(false);
+      setShowSpinner(false);
     }
   };
 
@@ -79,24 +91,26 @@ const App = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-6 cursor-pointer" onClick={handleTitleClick}>MovieOrpheus</h1>
-      <FilterMovies applyFilters={applyFilters} clearFilters={clearFilters} />
-      <FilterHistory
-        history={filterHistory}
-        deleteFilter={deleteFilterHistory}
-        clearHistory={clearFilterHistory}
-      />
-      {loading ? (
-        <div className="flex justify-center items-center">
+    <div className="container mx-auto p-4 min-h-screen flex flex-col justify-center">
+      {showSpinner ? (
+        <div className="flex justify-center items-center h-screen">
           <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-500" role="status">
-            <span className="visually-hidden">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {movies.map(movie => (
+          <h1 className="text-3xl font-bold text-center mb-6 cursor-pointer" onClick={handleTitleClick}>
+            MovieOrpheus
+          </h1>
+          <FilterMovies applyFilters={applyFilters} clearFilters={clearFilters} />
+          <FilterHistory
+            history={filterHistory}
+            deleteFilter={deleteFilterHistory}
+            clearHistory={clearFilterHistory}
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-grow">
+            {movies.map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
