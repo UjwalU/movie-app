@@ -7,7 +7,7 @@ import Pagination from './components/Pagination';
 import './App.css';
 
 const API_KEY = '81f382d33088c6d52099a62eab51d967';
-const API_URL = 'https://api.themoviedb.org/3/movie/upcoming';
+const DISCOVER_API_URL = 'https://api.themoviedb.org/3/discover/movie';
 const SEARCH_API_URL = 'https://api.themoviedb.org/3/search/movie';
 
 const App = () => {
@@ -24,7 +24,7 @@ const App = () => {
   const fetchMovies = async () => {
     setLoading(true);
     try {
-      let url = API_URL;
+      let url = DISCOVER_API_URL;
       let params = {
         api_key: API_KEY,
         language: 'en-US',
@@ -32,11 +32,15 @@ const App = () => {
         include_adult: false,
       };
 
-      if (filters.title || filters.language?.length) {
+      if (filters.title) {
         url = SEARCH_API_URL;
-        params.query = filters.title || '';
-        if (filters.language?.length) {
-          params.with_original_language = filters.language.join(',');
+        params.query = filters.title;
+      }
+
+      if (filters.language?.length) {
+        params.with_original_language = filters.language.join(',');
+        if (filters.title) {
+          url = SEARCH_API_URL;
         }
       }
 
@@ -53,7 +57,7 @@ const App = () => {
     setFilters(newFilters);
     const updatedHistory = [newFilters, ...filterHistory];
     setFilterHistory(updatedHistory.slice(0, 3)); // Keep only the most recent three searches
-    setPage(1); 
+    setPage(1);
   };
 
   const clearFilters = () => {
@@ -69,6 +73,7 @@ const App = () => {
   const clearFilterHistory = () => {
     setFilterHistory([]);
   };
+
   const handleTitleClick = () => {
     setPage(1);
   };

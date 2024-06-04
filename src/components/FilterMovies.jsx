@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const languages = [
@@ -12,7 +12,7 @@ const languages = [
   { code: 'ja', name: 'Japanese' },
   { code: 'ko', name: 'Korean' },
   { code: 'hi', name: 'Hindi' },
-  // Add more languages as needed
+  { code: 'kn', name: 'Kannada' },
 ];
 
 const FilterMovies = ({ applyFilters, clearFilters }) => {
@@ -47,7 +47,7 @@ const FilterMovies = ({ applyFilters, clearFilters }) => {
       <div className="mb-2">
         <input
           type="text"
-          placeholder="Search by title"
+          placeholder="Search by title (contains)"
           value={title}
           onChange={handleTitleChange}
           className="px-4 py-2 border rounded w-full"
