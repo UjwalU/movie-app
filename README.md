@@ -10,7 +10,7 @@
 
 1. **Clone the Repository**:
    Clone the repository to your local machine.
-   git clone <repository_url>
+   git clone https://github.com/UjwalU/movie-app.git
    cd movie-app
 2. npm install
 3. npm run dev 
