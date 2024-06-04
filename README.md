@@ -1,8 +1,17 @@
-# React + Vite
+# Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Setup
 
-Currently, two official plugins are available:
+### Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Node.js and npm**: Make sure you have Node.js and npm installed on your system. You can download and install the latest version of Node.js from [nodejs.org](https://nodejs.org/). npm is included with Node.js.
+
+### Steps to Run the Project
+
+1. **Clone the Repository**:
+   Clone the repository to your local machine.
+   git clone <repository_url>
+   cd movie-app
+2. npm install
+3. npm run dev 
+   http://localhost:5173
