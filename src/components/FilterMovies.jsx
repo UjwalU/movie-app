@@ -68,6 +68,20 @@ const FilterMovies = ({ applyFilters, clearFilters }) => {
               {lang.name}
             </label>
           ))}
+          <label className="mr-4">
+            <input
+              type="checkbox"
+              value="all"
+              checked={selectedLanguages.length === 0}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedLanguages([]);
+                }
+              }}
+              className="mr-1"
+            />
+            All
+          </label>
         </div>
       </div>
       <div className="flex">

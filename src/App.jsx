@@ -17,6 +17,7 @@ const App = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [showSpinner, setShowSpinner] = useState(true);
+  const [noMatchFound, setNoMatchFound] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -50,13 +51,17 @@ const App = () => {
 
       if (filters.language?.length) {
         params.with_original_language = filters.language.join(',');
-        if (filters.title) {
-          url = SEARCH_API_URL;
-        }
       }
 
       const response = await axios.get(url, { params });
-      setMovies(response.data.results);
+      const filteredMovies = response.data.results.filter((movie) => {
+        if (filters.language?.length) {
+          return filters.language.includes(movie.original_language);
+        }
+        return true;
+      });
+      setMovies(filteredMovies);
+      setNoMatchFound(filteredMovies.length === 0);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching movies:', error);
@@ -109,11 +114,17 @@ const App = () => {
             deleteFilter={deleteFilterHistory}
             clearHistory={clearFilterHistory}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-grow">
-            {movies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
+          {noMatchFound ? (
+            <div className="text-center text-gray-500 my-8">
+              No matching movies found
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-grow">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          )}
           <div className="flex justify-end">
             <Pagination currentPage={page} setPage={setPage} />
           </div>
